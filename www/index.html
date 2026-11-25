@@ -90,6 +90,780 @@
     .login-hero {
       background: var(--green);
       color: #ffffff;
+      padding: 26px 20px 24px;
+      border-bottom-left-radius: 22px;
+      border-bottom-right-radius: 22px;
+    }
+
+    .login-brand-name {
+      margin: 0;
+      font-size: 28px;
+      font-weight: 800;
+      letter-spacing: -0.4px;
+      color: #ffffff;
+    }
+
+    .login-tagline {
+      margin: 8px 0 0;
+      font-size: 14px;
+      color: rgba(255, 255, 255, 0.92);
+      line-height: 1.45;
+    }
+
+    .login-card {
+      background: var(--card);
+      margin: -14px 14px 20px;
+      padding: 20px 18px;
+      border-radius: 16px;
+      border: 1px solid var(--border);
+      box-shadow: 0 6px 20px rgba(17, 24, 39, 0.06);
+    }
+
+    .login-card h2 {
+      margin: 0 0 4px;
+      font-size: 19px;
+      font-weight: 800;
+    }
+
+    .login-sub {
+      margin: 0 0 14px;
+      font-size: 13px;
+      color: var(--muted);
+    }
+
+    .field-label {
+      display: block;
+      font-size: 12.5px;
+      font-weight: 700;
+      margin-bottom: 5px;
+      color: var(--text);
+    }
+
+    .field-input, .field-select, .field-textarea {
+      width: 100%;
+      border: 1px solid #cbd5e1;
+      border-radius: 10px;
+      padding: 10px 12px;
+      font-size: 14px;
+      margin-bottom: 12px;
+      font-family: inherit;
+      background: #ffffff;
+      color: var(--text);
+    }
+
+    .otp-row {
+      display: flex;
+      gap: 8px;
+      align-items: center;
+      margin-bottom: 12px;
+    }
+
+    .otp-row .field-input {
+      margin-bottom: 0;
+      flex: 1;
+      letter-spacing: 3px;
+      font-weight: 700;
+    }
+
+    .secondary-btn {
+      background: var(--green-soft);
+      color: var(--green-dark);
+      border: 1px solid #a7f3d0;
+      border-radius: 10px;
+      padding: 10px 12px;
+      font-size: 13px;
+      font-weight: 700;
+      cursor: pointer;
+      white-space: nowrap;
+    }
+
+    .otp-hint {
+      font-size: 12px;
+      color: var(--green-dark);
+      background: var(--green-soft);
+      padding: 8px 10px;
+      border-radius: 8px;
+      margin-bottom: 12px;
+      font-weight: 600;
+    }
+
+    .submit-green {
+      width: 100%;
+      background: var(--green);
+      color: #ffffff;
+      border: none;
+      border-radius: 10px;
+      padding: 12px 14px;
+      font-size: 14.5px;
+      font-weight: 700;
+      cursor: pointer;
+    }
+
+    .submit-green:active {
+      background: var(--green-dark);
+    }
+
+    /* MAIN APP SHELL */
+    .app-shell {
+      max-width: 520px;
+      margin: 0 auto;
+      min-height: 100vh;
+      background: var(--bg);
+      padding-bottom: 36px;
+    }
+
+    .top-header {
+      background: var(--green);
+      color: #ffffff;
+      padding: 14px 16px 16px;
+      border-bottom-left-radius: 18px;
+      border-bottom-right-radius: 18px;
+    }
+
+    .header-top-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 10px;
+    }
+
+    .brand-title {
+      margin: 0;
+      font-size: 25px;
+      font-weight: 800;
+      letter-spacing: -0.4px;
+      line-height: 1.1;
+      color: #ffffff;
+    }
+
+    .header-actions {
+      display: flex;
+      align-items: center;
+      gap: 7px;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+    }
+
+    .lang-btn, .account-btn {
+      border: 1px solid rgba(255, 255, 255, 0.35);
+      background: rgba(255, 255, 255, 0.16);
+      color: #ffffff;
+      border-radius: 999px;
+      padding: 6px 11px;
+      font-size: 12.5px;
+      font-weight: 700;
+      cursor: pointer;
+    }
+
+    .loc-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      margin-top: 9px;
+      background: rgba(255, 255, 255, 0.18);
+      color: #ffffff;
+      border: none;
+      border-radius: 999px;
+      padding: 5px 11px;
+      font-size: 12px;
+      font-weight: 600;
+      cursor: pointer;
+    }
+
+    .search-box {
+      margin-top: 12px;
+    }
+
+    .search-input {
+      width: 100%;
+      border: none;
+      border-radius: 10px;
+      padding: 11px 14px;
+      font-size: 14px;
+      color: var(--text);
+      background: #ffffff;
+      outline: none;
+    }
+
+    .cat-strip {
+      display: flex;
+      gap: 8px;
+      overflow-x: auto;
+      padding: 12px 14px 6px;
+      scrollbar-width: none;
+    }
+
+    .cat-strip::-webkit-scrollbar {
+      display: none;
+    }
+
+    .cat-chip {
+      flex: 0 0 auto;
+      border: 1px solid var(--border);
+      background: #ffffff;
+      color: var(--text);
+      border-radius: 999px;
+      padding: 7px 14px;
+      font-size: 13px;
+      font-weight: 700;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .cat-chip.active {
+      background: var(--green);
+      color: #ffffff;
+      border-color: var(--green);
+    }
+
+    .section-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 10px 14px 10px;
+    }
+
+    .section-title {
+      margin: 0;
+      font-size: 18px;
+      font-weight: 800;
+      color: var(--text);
+    }
+
+    .post-offer-btn {
+      background: var(--green);
+      color: #ffffff;
+      border: none;
+      border-radius: 9px;
+      padding: 8px 13px;
+      font-size: 13px;
+      font-weight: 700;
+      cursor: pointer;
+    }
+
+    .offers-list {
+      padding: 0 14px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .offer-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 14px;
+      box-shadow: 0 2px 8px rgba(17, 24, 39, 0.04);
+    }
+
+    .card-top-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 8px;
+    }
+
+    .badge-type {
+      font-size: 11px;
+      font-weight: 800;
+      letter-spacing: 0.4px;
+      padding: 4px 9px;
+      border-radius: 6px;
+      text-transform: uppercase;
+    }
+
+    .badge-borrow {
+      background: var(--borrow-bg);
+      color: var(--borrow-text);
+    }
+
+    .badge-swap {
+      background: var(--swap-bg);
+      color: var(--swap-text);
+    }
+
+    .distance-text {
+      font-size: 12px;
+      font-weight: 700;
+      color: #e11d48;
+    }
+
+    .offer-title {
+      margin: 0 0 5px;
+      font-size: 16px;
+      font-weight: 800;
+      color: var(--text);
+    }
+
+    .offer-desc {
+      margin: 0 0 10px;
+      font-size: 13.5px;
+      color: var(--muted);
+      line-height: 1.4;
+    }
+
+    .offer-photo {
+      width: 100%;
+      max-height: 210px;
+      object-fit: cover;
+      border-radius: 10px;
+      margin-bottom: 10px;
+      border: 1px solid var(--border);
+    }
+
+    .wants-box {
+      background: #f8fafc;
+      border-left: 3.5px solid var(--want-border);
+      border-radius: 6px;
+      padding: 8px 10px;
+      font-size: 12.5px;
+      color: #334155;
+      margin-bottom: 12px;
+    }
+
+    .wants-box strong {
+      color: var(--text);
+    }
+
+    .card-footer-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .user-info {
+      display: flex;
+      align-items: center;
+      gap: 9px;
+    }
+
+    .avatar-circle {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      background: var(--green-soft);
+      color: var(--green-dark);
+      font-weight: 800;
+      font-size: 13px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .user-name {
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--text);
+      line-height: 1.2;
+    }
+
+    .user-badge {
+      font-size: 11px;
+      font-weight: 700;
+      color: var(--green-dark);
+    }
+
+    .swap-btn {
+      background: var(--green);
+      color: #ffffff;
+      border: none;
+      border-radius: 8px;
+      padding: 8px 13px;
+      font-size: 12.5px;
+      font-weight: 700;
+      cursor: pointer;
+    }
+
+    .swap-btn.proposed {
+      background: #0f766e;
+    }
+
+    /* MODAL */
+    .modal-backdrop {
+      position: fixed;
+      inset: 0;
+      background: rgba(15, 23, 42, 0.55);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 16px;
+      z-index: 50;
+    }
+
+    .modal-backdrop.open {
+      display: flex;
+    }
+
+    .modal-card {
+      width: 100%;
+      max-width: 440px;
+      background: #ffffff;
+      border-radius: 16px;
+      padding: 18px;
+      max-height: 88vh;
+      overflow-y: auto;
+    }
+
+    .modal-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 12px;
+    }
+
+    .modal-head h3 {
+      margin: 0;
+      font-size: 17px;
+      font-weight: 800;
+    }
+
+    .close-btn {
+      border: none;
+      background: #f1f5f9;
+      color: var(--text);
+      width: 30px;
+      height: 30px;
+      border-radius: 50%;
+      font-weight: 700;
+      cursor: pointer;
+    }
+
+    .photo-picker-box {
+      border: 1.5px dashed #10b981;
+      background: #f0fdf4;
+      border-radius: 12px;
+      padding: 12px;
+      margin-bottom: 12px;
+    }
+
+    .preview-thumb {
+      width: 100%;
+      max-height: 175px;
+      object-fit: cover;
+      border-radius: 10px;
+      margin-top: 8px;
+      display: none;
+    }
+
+    .toast {
+      position: fixed;
+      bottom: 18px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: #111827;
+      color: #ffffff;
+      padding: 9px 16px;
+      border-radius: 999px;
+      font-size: 12.5px;
+      font-weight: 700;
+      z-index: 80;
+      display: none;
+    }
+  </style>
+</head>
+<body>
+  <template id="logoSvgTemplate">
+    <svg viewBox="0 0 24 24">
+      <path d="M7 7h11l-3-3" />
+      <path d="M18 7l-3 3" />
+      <path d="M17 17H6l3 3" />
+      <path d="M6 17l3-3" />
+    </svg>
+  </template>
+
+  <!-- LOGIN + OTP SCREEN -->
+  <section id="loginView" class="login-shell">
+    <div class="login-hero">
+      <div class="logo-wrap">
+        <div class="logo-badge" data-logo-slot></div>
+        <h1 class="login-brand-name">icchipuchuu</h1>
+      </div>
+      <p class="login-tagline">Local community sharing, free borrow & barter swap around Chittoor.</p>
+    </div>
+
+    <div class="login-card">
+      <h2>Neighbor Login & OTP</h2>
+      <p class="login-sub">Enter your phone number, tap Send OTP, and verify to enter.</p>
+
+      <form id="loginForm">
+        <label class="field-label" for="loginName">Your Name</label>
+        <input id="loginName" type="text" class="field-input" placeholder="e.g. Tharun V." required />
+
+        <label class="field-label" for="loginPhone">Mobile Number</label>
+        <div class="otp-row">
+          <input id="loginPhone" type="tel" class="field-input" placeholder="10-digit mobile number" required />
+          <button id="sendOtpBtn" type="button" class="secondary-btn">Send OTP</button>
+        </div>
+
+        <div id="otpNotice" class="otp-hint hidden"></div>
+
+        <label class="field-label" for="loginOtp">Enter 6-Digit OTP</label>
+        <input id="loginOtp" type="text" inputmode="numeric" maxlength="6" class="field-input" placeholder="••••••" required />
+
+        <label class="field-label" for="loginWard">Ward / Locality</label>
+        <input id="loginWard" type="text" class="field-input" value="Chittoor Ward 12 • 1.5 km" required />
+
+        <label class="field-label" for="loginBadge">Member Type</label>
+        <select id="loginBadge" class="field-select">
+          <option value="Student Verified">Student Verified</option>
+          <option value="ID Verified">ID Verified</option>
+          <option value="Gold Neighbor">Gold Neighbor</option>
+        </select>
+
+        <button type="submit" class="submit-green">Verify OTP & Continue</button>
+      </form>
+    </div>
+  </section>
+
+  <!-- MAIN APP SCREEN -->
+  <div id="mainAppView" class="app-shell hidden">
+    <header class="top-header">
+      <div class="header-top-row">
+        <div>
+          <div class="logo-wrap">
+            <div class="logo-badge" data-logo-slot></div>
+            <h1 class="brand-title">icchipuchuu</h1>
+          </div>
+          <button id="locationBtn" type="button" class="loc-pill">
+            <span>📍</span>
+            <span id="locationText">Chittoor Ward 12 • 1.5 km</span>
+          </button>
+        </div>
+        <div class="header-actions">
+          <button id="logoutBtn" type="button" class="account-btn">Logout</button>
+          <button id="langBtn" type="button" class="lang-btn">తెలుగు</button>
+        </div>
+      </div>
+
+      <div class="search-box">
+        <input
+          id="searchInput"
+          type="text"
+          class="search-input"
+          placeholder="Search tools, books, farm produce, skills..."
+        />
+      </div>
+    </header>
+
+    <div id="categoryStrip" class="cat-strip">
+      <button type="button" class="cat-chip active" data-cat="All">All</button>
+      <button type="button" class="cat-chip" data-cat="Tools">🛠️ Tools</button>
+      <button type="button" class="cat-chip" data-cat="Books">📚 Books</button>
+      <button type="button" class="cat-chip" data-cat="Home Produce">🌿 Home Produce</button>
+      <button type="button" class="cat-chip" data-cat="Skills">💡 Skills</button>
+    </div>
+
+    <div class="section-head">
+      <h2 id="nearbyHeading" class="section-title">Nearby Offers</h2>
+      <button id="openPostBtn" type="button" class="post-offer-btn">+ Post Offer</button>
+    </div>
+
+    <main id="offersList" class="offers-list"></main>
+  </div>
+
+  <!-- POST OFFER MODAL WITH PHOTO UPLOAD -->
+  <div id="postModal" class="modal-backdrop">
+    <div class="modal-card">
+      <div class="modal-head">
+        <div class="logo-wrap">
+          <div class="logo-badge green-bg" style="width:32px;height:32px;border-radius:9px;" data-logo-slot></div>
+          <h3>Post a Nearby Offer</h3>
+        </div>
+        <button type="button" class="close-btn" data-close="postModal">✕</button>
+      </div>
+      <form id="postOfferForm">
+        <label class="field-label" for="offerTitle">Item or Skill Title</label>
+        <input id="offerTitle" type="text" class="field-input" placeholder="e.g. Study Lamp or Mango Basket" required />
+
+        <label class="field-label" for="offerType">Offer Type</label>
+        <select id="offerType" class="field-select">
+          <option value="FREE BORROW">FREE BORROW</option>
+          <option value="BARTER SWAP">BARTER SWAP</option>
+        </select>
+
+        <label class="field-label" for="offerCategory">Category</label>
+        <select id="offerCategory" class="field-select">
+          <option value="Tools">Tools</option>
+          <option value="Books">Books</option>
+          <option value="Home Produce">Home Produce</option>
+          <option value="Skills">Skills</option>
+        </select>
+
+        <label class="field-label" for="offerDesc">Description</label>
+        <textarea id="offerDesc" rows="2" class="field-textarea" placeholder="Condition, availability, or details..."></textarea>
+
+        <label class="field-label" for="offerWants">Wants in return</label>
+        <input id="offerWants" type="text" class="field-input" placeholder="e.g. Books, fruits, or local help" />
+
+        <label class="field-label" for="offerDistance">Distance</label>
+        <input id="offerDistance" type="text" class="field-input" value="500m" />
+
+        <div class="photo-picker-box">
+          <label class="field-label" for="offerPhoto">Select Photo from Phone / Camera</label>
+          <input id="offerPhoto" type="file" accept="image/*" style="width:100%;font-size:13px;" />
+          <img id="offerPhotoPreview" class="preview-thumb" alt="Offer preview" />
+        </div>
+
+        <button type="submit" class="submit-green">Publish Offer</button>
+      </form>
+    </div>
+  </div>
+
+  <div id="toast" class="toast"></div>
+
+  <script>
+    const logoTpl = document.getElementById("logoSvgTemplate");
+    document.querySelectorAll("[data-logo-slot]").forEach((slot) => {
+      slot.appendChild(logoTpl.content.cloneNode(true));
+    });
+
+    const loginView = document.getElementById("loginView");
+    const mainAppView = document.getElementById("mainAppView");
+    const loginForm = document.getElementById("loginForm");
+    const sendOtpBtn = document.getElementById("sendOtpBtn");
+    const otpNotice = document.getElementById("otpNotice");
+    const logoutBtn = document.getElementById("logoutBtn");
+
+    const offersList = document.getElementById("offersList");
+    const searchInput = document.getElementById("searchInput");
+    const categoryStrip = document.getElementById("categoryStrip");
+    const openPostBtn = document.getElementById("openPostBtn");
+    const postModal = document.getElementById("postModal");
+    const langBtn = document.getElementById("langBtn");
+    const locationBtn = document.getElementById("locationBtn");
+    const locationText = document.getElementById("locationText");
+    const nearbyHeading = document.getElementById("nearbyHeading");
+    const toast = document.getElementById("toast");
+
+    const postOfferForm = document.getElementById("postOfferForm");
+    const offerPhoto = document.getElementById("offerPhoto");
+    const offerPhotoPreview = document.getElementById("offerPhotoPreview");
+
+    let activeCategory = "All";
+    let isTelugu = false;
+    let uploadedPhotoData = "";
+    let generatedOtp = "";
+    let currentNeighbor = JSON.parse(localStorage.getItem("icchi_neighbor") || "null");
+
+    let offers = [
+      {
+        id: 1,
+        type: "FREE BORROW",
+        category: "Tools",
+        distance: "400m",
+        title: "Bosch Electric Drill & Bit Set",
+        desc: "Works great for wall mounting & wood. Borrow for up to 2 days.",
+        wants: "Free borrow (just return clean) or home-grown curry leaves",
+        user: "Ramesh K.",
+        badge: "ID Verified",
+        photo: ""
+      },
+      {
+        id: 2,
+        type: "BARTER SWAP",
+        category: "Home Produce",
+        distance: "650m",
+        title: "Fresh Pure Cow Milk (2 Liters/day)",
+        desc: "Morning farm-fresh milk available for daily or weekend swap.",
+        wants: "Organic vegetables, rice, or basic mobile/Wi-Fi troubleshooting",
+        user: "Lakshmi Devi",
+        badge: "Gold Neighbor<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>icchipuchuu — Community Share & Barter</title>
+  <style>
+    :root {
+      --green: #009e60;
+      --green-dark: #007d4c;
+      --green-soft: #e6f7ef;
+      --bg: #f3f5f7;
+      --card: #ffffff;
+      --text: #111827;
+      --muted: #5f6773;
+      --border: #e5e7eb;
+      --borrow-bg: #e0f2fe;
+      --borrow-text: #0369a1;
+      --swap-bg: #fef3c7;
+      --swap-text: #b45309;
+      --want-border: #10b981;
+    }
+
+    * {
+      box-sizing: border-box;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    body {
+      margin: 0;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+    }
+
+    .hidden {
+      display: none !important;
+    }
+
+    /* LOGO MARK */
+    .logo-wrap {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .logo-badge {
+      width: 40px;
+      height: 40px;
+      border-radius: 12px;
+      background: #ffffff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.14);
+      flex-shrink: 0;
+    }
+
+    .logo-badge.green-bg {
+      background: var(--green);
+    }
+
+    .logo-badge svg {
+      width: 22px;
+      height: 22px;
+      fill: none;
+      stroke-width: 2.5;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+
+    .logo-badge:not(.green-bg) svg {
+      stroke: var(--green);
+    }
+
+    .logo-badge.green-bg svg {
+      stroke: #ffffff;
+    }
+
+    /* LOGIN SCREEN */
+    .login-shell {
+      min-height: 100vh;
+      max-width: 520px;
+      margin: 0 auto;
+      background: var(--bg);
+      display: flex;
+      flex-direction: column;
+    }
+
+    .login-hero {
+      background: var(--green);
+      color: #ffffff;
       padding: 28px 20px 26px;
       border-bottom-left-radius: 22px;
       border-bottom-right-radius: 22px;
