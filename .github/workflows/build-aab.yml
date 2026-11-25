@@ -43,3 +43,15 @@ jobs:
           name: icchipuchuu-release-aab
           path: android/app/build/outputs/bundle/release/app-release.aab
           
+      - name: Build Debug APK for Phone Install
+        working-directory: android
+        run: |
+          chmod +x gradlew
+          ./gradlew assembleDebug
+
+      - name: Upload Debug APK Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: icchipuchuu-debug-apk
+          path: android/app/build/outputs/apk/debug/app-debug.apk
+          
