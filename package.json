@@ -1,0 +1,11 @@
+{
+  "name": "icchipuchuu",
+  "version": "1.0.0",
+  "description": "icchipuchuu - Neighbor-to-Neighbor Barter, Tool Share & Local Help",
+  "private": true,
+  "dependencies": {
+    "@capacitor/android": "^6.1.2",
+    "@capacitor/cli": "^6.1.2",
+    "@capacitor/core": "^6.1.2"
+  }
+}

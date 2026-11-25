@@ -1,0 +1,8 @@
+{
+  "appId": "com.icchipuchuu.neighbor",
+  "appName": "icchipuchuu",
+  "webDir": "www",
+  "server": {
+    "androidScheme": "https"
+  }
+}
