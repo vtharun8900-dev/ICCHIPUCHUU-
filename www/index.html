@@ -1,3 +1,550 @@
+7<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>icchipuchuu — Community Share & Barter</title>
+  <style>
+    :root {
+      --bg-app: #f6f5fb;
+      --surface: #ffffff;
+      --surface-soft: #eef0ff;
+      --text-main: #1b1834;
+      --text-muted: #5d587a;
+      --primary: #4f46e5;
+      --primary-dark: #3730a3;
+      --accent: #f97316;
+      --accent-soft: #fff2e8;
+      --border: #e2e0f0;
+      --success-bg: #e7f8ef;
+      --success-text: #157347;
+      --radius: 16px;
+    }
+
+    * {
+      box-sizing: border-box;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    body {
+      margin: 0;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      background: var(--bg-app);
+      color: var(--text-main);
+      line-height: 1.45;
+    }
+
+    .container {
+      max-width: 540px;
+      margin: 0 auto;
+      padding: 16px 14px 48px;
+    }
+
+    .card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 18px;
+      margin-bottom: 14px;
+      box-shadow: 0 6px 20px rgba(27, 24, 52, 0.05);
+    }
+
+    .hidden {
+      display: none !important;
+    }
+
+    .badge {
+      display: inline-block;
+      background: var(--surface-soft);
+      color: var(--primary);
+      font-weight: 700;
+      font-size: 12px;
+      padding: 5px 10px;
+      border-radius: 999px;
+      margin-bottom: 10px;
+    }
+
+    h1, h2, h3, p {
+      margin-top: 0;
+    }
+
+    h1 {
+      font-size: 26px;
+      color: var(--primary);
+      margin-bottom: 6px;
+    }
+
+    .subtitle {
+      color: var(--text-muted);
+      font-size: 14px;
+      margin-bottom: 16px;
+    }
+
+    label {
+      display: block;
+      font-size: 13px;
+      font-weight: 600;
+      margin-bottom: 6px;
+      color: var(--text-main);
+    }
+
+    input[type="text"],
+    input[type="tel"],
+    textarea,
+    select {
+      width: 100%;
+      padding: 12px 14px;
+      border: 1.5px solid var(--border);
+      border-radius: 12px;
+      font-size: 15px;
+      color: var(--text-main);
+      background: #fcfcff;
+      margin-bottom: 12px;
+    }
+
+    input:focus,
+    textarea:focus,
+    select:focus {
+      outline: none;
+      border-color: var(--primary);
+      background: #ffffff;
+    }
+
+    .btn {
+      width: 100%;
+      border: none;
+      border-radius: 12px;
+      padding: 13px 16px;
+      font-size: 15px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: transform 0.08s ease, opacity 0.15s ease;
+    }
+
+    .btn:active {
+      transform: scale(0.98);
+    }
+
+    .btn-primary {
+      background: var(--primary);
+      color: #ffffff;
+    }
+
+    .btn-primary:hover {
+      background: var(--primary-dark);
+    }
+
+    .btn-accent {
+      background: var(--accent);
+      color: #ffffff;
+    }
+
+    .btn-ghost {
+      background: var(--surface-soft);
+      color: var(--primary);
+      width: auto;
+      padding: 8px 12px;
+      font-size: 13px;
+    }
+
+    .topbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .user-chip {
+      font-size: 12px;
+      background: var(--accent-soft);
+      color: #9a3412;
+      padding: 6px 10px;
+      border-radius: 999px;
+      font-weight: 600;
+    }
+
+    .option-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-bottom: 12px;
+    }
+
+    .option-btn {
+      border: 1.5px solid var(--border);
+      background: var(--surface);
+      color: var(--text-main);
+      padding: 9px 14px;
+      border-radius: 999px;
+      font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
+    }
+
+    .option-btn.active {
+      background: var(--primary);
+      color: #ffffff;
+      border-color: var(--primary);
+    }
+
+    .upload-box {
+      border: 2px dashed var(--primary);
+      background: var(--surface-soft);
+      border-radius: 14px;
+      padding: 14px;
+      text-align: center;
+      margin-bottom: 12px;
+    }
+
+    .preview-img {
+      width: 100%;
+      max-height: 240px;
+      object-fit: cover;
+      border-radius: 12px;
+      margin-top: 10px;
+      border: 1px solid var(--border);
+    }
+
+    .listing-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 16px;
+      margin-bottom: 12px;
+    }
+
+    .listing-img {
+      width: 100%;
+      height: 190px;
+      object-fit: cover;
+      border-radius: 12px;
+      margin-bottom: 10px;
+    }
+
+    .tag {
+      display: inline-block;
+      font-size: 12px;
+      font-weight: 700;
+      padding: 4px 10px;
+      border-radius: 999px;
+      margin-bottom: 8px;
+      background: var(--accent-soft);
+      color: #c2410c;
+    }
+
+    .tag.share {
+      background: var(--success-bg);
+      color: var(--success-text);
+    }
+
+    .meta {
+      font-size: 13px;
+      color: var(--text-muted);
+      margin-bottom: 10px;
+    }
+
+    .actions-row {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .status-banner {
+      background: var(--success-bg);
+      color: var(--success-text);
+      padding: 10px 12px;
+      border-radius: 10px;
+      font-size: 13px;
+      font-weight: 600;
+      margin-bottom: 12px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <!-- LOGIN SCREEN -->
+    <section id="loginScreen" class="card">
+      <div class="badge">NEIGHBORHOOD ACCESS</div>
+      <h1>icchipuchuu</h1>
+      <p class="subtitle">Sign in to share items, swap goods, or exchange locally with neighbors.</p>
+
+      <form id="loginForm">
+        <label for="loginName">Your Name</label>
+        <input id="loginName" type="text" placeholder="Enter your name" required />
+
+        <label for="loginArea">Area / Locality</label>
+        <input id="loginArea" type="text" value="Chittoor & Nearby" required />
+
+        <label for="loginPhone">Phone Number (optional)</label>
+        <input id="loginPhone" type="tel" placeholder="e.g. 9876543210" />
+
+        <button type="submit" class="btn btn-primary">Continue to icchipuchuu</button>
+      </form>
+    </section>
+
+    <!-- MAIN APP SCREEN -->
+    <main id="appScreen" class="hidden">
+      <div class="card">
+        <div class="topbar">
+          <div>
+            <h1>icchipuchuu</h1>
+            <p class="subtitle" style="margin-bottom:0;">Share, barter swap & local exchange</p>
+          </div>
+          <button id="logoutBtn" type="button" class="btn btn-ghost">Switch User</button>
+        </div>
+        <div style="margin-top:12px; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px;">
+          <span id="welcomeChip" class="user-chip">Welcome</span>
+          <button id="changeAreaBtn" type="button" class="btn btn-ghost">Change Area</button>
+        </div>
+      </div>
+
+      <!-- FILTER OPTIONS -->
+      <div class="card">
+        <label>Browse Options</label>
+        <div id="filterOptions" class="option-row">
+          <button type="button" class="option-btn active" data-filter="All">All Listings</button>
+          <button type="button" class="option-btn" data-filter="Barter Swap">Barter Swap</button>
+          <button type="button" class="option-btn" data-filter="Free Share">Free Share</button>
+          <button type="button" class="option-btn" data-filter="Direct Cash">Direct Cash</button>
+        </div>
+      </div>
+
+      <!-- POST FORM WITH PHOTO UPLOAD PREVIEW -->
+      <div class="card">
+        <h2>Post an Item or Offer</h2>
+        <div id="statusMsg" class="status-banner hidden"></div>
+
+        <form id="postForm">
+          <label for="itemTitle">Item Name</label>
+          <input id="itemTitle" type="text" placeholder="e.g. Study table, books, charger" required />
+
+          <label>Select Option Type</label>
+          <div id="typeOptions" class="option-row">
+            <button type="button" class="option-btn active" data-type="Free Share">Free Share</button>
+            <button type="button" class="option-btn" data-type="Barter Swap">Barter Swap</button>
+            <button type="button" class="option-btn" data-type="Direct Cash">Direct Cash</button>
+          </div>
+
+          <label for="itemNote">Swap Preference, Price, or Pickup Note</label>
+          <textarea id="itemNote" rows="2" placeholder="What are you looking to swap or share?"></textarea>
+
+          <div class="upload-box">
+            <label for="photoInput" style="margin-bottom:8px;">Upload or Take Photo</label>
+            <input id="photoInput" type="file" accept="image/*" capture="environment" />
+            <img id="photoPreview" class="preview-img hidden" alt="Selected photo preview" />
+            <button id="clearPhotoBtn" type="button" class="btn btn-ghost hidden" style="margin-top:8px;">Remove Photo</button>
+          </div>
+
+          <button type="submit" class="btn btn-accent">Publish Listing</button>
+        </form>
+      </div>
+
+      <!-- LISTINGS FEED -->
+      <div id="listingsFeed"></div>
+    </main>
+  </div>
+
+  <script>
+    const loginScreen = document.getElementById("loginScreen");
+    const appScreen = document.getElementById("appScreen");
+    const loginForm = document.getElementById("loginForm");
+    const logoutBtn = document.getElementById("logoutBtn");
+    const changeAreaBtn = document.getElementById("changeAreaBtn");
+    const welcomeChip = document.getElementById("welcomeChip");
+
+    const filterOptions = document.getElementById("filterOptions");
+    const typeOptions = document.getElementById("typeOptions");
+    const postForm = document.getElementById("postForm");
+    const photoInput = document.getElementById("photoInput");
+    const photoPreview = document.getElementById("photoPreview");
+    const clearPhotoBtn = document.getElementById("clearPhotoBtn");
+    const listingsFeed = document.getElementById("listingsFeed");
+    const statusMsg = document.getElementById("statusMsg");
+
+    let currentUser = JSON.parse(localStorage.getItem("icchipuchuu_user") || "null");
+    let selectedFilter = "All";
+    let selectedType = "Free Share";
+    let currentPhotoDataUrl = "";
+
+    let listings = [
+      {
+        id: 1,
+        title: "Reference Books & Notes",
+        type: "Free Share",
+        note: "Available for nearby pickup. Good condition.",
+        area: "Chittoor & Nearby",
+        photo: ""
+      },
+      {
+        id: 2,
+        title: "Wireless Earbuds",
+        type: "Barter Swap",
+        note: "Open to swapping for a desk lamp or headphones.",
+        area: "Chittoor & Nearby",
+        photo: ""
+      }
+    ];
+
+    function renderAuthState() {
+      if (currentUser && currentUser.name) {
+        loginScreen.classList.add("hidden");
+        appScreen.classList.remove("hidden");
+        welcomeChip.textContent = `${currentUser.name} • ${currentUser.area}`;
+        renderListings();
+      } else {
+        appScreen.classList.add("hidden");
+        loginScreen.classList.remove("hidden");
+      }
+    }
+
+    loginForm.addEventListener("submit", (e) => {
+      e.preventDefault();
+      const name = document.getElementById("loginName").value.trim();
+      const area = document.getElementById("loginArea").value.trim() || "Chittoor & Nearby";
+      const phone = document.getElementById("loginPhone").value.trim();
+      if (!name) return;
+
+      currentUser = { name, area, phone };
+      localStorage.setItem("icchipuchuu_user", JSON.stringify(currentUser));
+      renderAuthState();
+    });
+
+    logoutBtn.addEventListener("click", () => {
+      localStorage.removeItem("icchipuchuu_user");
+      currentUser = null;
+      renderAuthState();
+    });
+
+    changeAreaBtn.addEventListener("click", () => {
+      const nextArea = prompt("Enter your area or locality:", currentUser?.area || "Chittoor & Nearby");
+      if (nextArea && nextArea.trim()) {
+        currentUser.area = nextArea.trim();
+        localStorage.setItem("icchipuchuu_user", JSON.stringify(currentUser));
+        renderAuthState();
+      }
+    });
+
+    filterOptions.addEventListener("click", (e) => {
+      const btn = e.target.closest(".option-btn");
+      if (!btn) return;
+      selectedFilter = btn.dataset.filter;
+      filterOptions.querySelectorAll(".option-btn").forEach((b) => b.classList.remove("active"));
+      btn.classList.add("active");
+      renderListings();
+    });
+
+    typeOptions.addEventListener("click", (e) => {
+      const btn = e.target.closest(".option-btn");
+      if (!btn) return;
+      selectedType = btn.dataset.type;
+      typeOptions.querySelectorAll(".option-btn").forEach((b) => b.classList.remove("active"));
+      btn.classList.add("active");
+    });
+
+    photoInput.addEventListener("change", (e) => {
+      const file = e.target.files && e.target.files[0];
+      if (!file) return;
+
+      const reader = new FileReader();
+      reader.onload = () => {
+        currentPhotoDataUrl = reader.result;
+        photoPreview.src = currentPhotoDataUrl;
+        photoPreview.classList.remove("hidden");
+        clearPhotoBtn.classList.remove("hidden");
+      };
+      reader.readAsDataURL(file);
+    });
+
+    clearPhotoBtn.addEventListener("click", () => {
+      currentPhotoDataUrl = "";
+      photoInput.value = "";
+      photoPreview.src = "";
+      photoPreview.classList.add("hidden");
+      clearPhotoBtn.classList.add("hidden");
+    });
+
+    function showStatus(text) {
+      statusMsg.textContent = text;
+      statusMsg.classList.remove("hidden");
+      setTimeout(() => statusMsg.classList.add("hidden"), 2500);
+    }
+
+    function renderListings() {
+      const filtered =
+        selectedFilter === "All"
+          ? listings
+          : listings.filter((item) => item.type === selectedFilter);
+
+      if (!filtered.length) {
+        listingsFeed.innerHTML = `<div class="card"><p class="subtitle" style="margin:0;">No listings in "${selectedFilter}" yet.</p></div>`;
+        return;
+      }
+
+      listingsFeed.innerHTML = filtered
+        .map(
+          (item) => `
+          <article class="listing-card">
+            <span class="tag ${item.type === "Free Share" ? "share" : ""}">${item.type}</span>
+            <h3>${escapeHtml(item.title)}</h3>
+            ${item.photo ? `<img src="${item.photo}" alt="${escapeHtml(item.title)}" class="listing-img" />` : ""}
+            <p class="meta">${escapeHtml(item.note || "Local community offer.")}</p>
+            <p class="meta"><strong>Area:</strong> ${escapeHtml(item.area)}</p>
+            <div class="actions-row">
+              <button type="button" class="btn btn-ghost" onclick="handleInterest(${item.id})">Interested</button>
+              <button type="button" class="btn btn-ghost" onclick="handleRemove(${item.id})">Remove</button>
+            </div>
+          </article>
+        `
+        )
+        .join("");
+    }
+
+    window.handleInterest = function (id) {
+      const found = listings.find((i) => i.id === id);
+      if (found) {
+        showStatus(`Marked interest in "${found.title}".`);
+      }
+    };
+
+    window.handleRemove = function (id) {
+      listings = listings.filter((i) => i.id !== id);
+      renderListings();
+      showStatus("Listing removed.");
+    };
+
+    postForm.addEventListener("submit", (e) => {
+      e.preventDefault();
+      const title = document.getElementById("itemTitle").value.trim();
+      const note = document.getElementById("itemNote").value.trim();
+      if (!title) return;
+
+      listings.unshift({
+        id: Date.now(),
+        title,
+        type: selectedType,
+        note,
+        area: currentUser?.area || "Chittoor & Nearby",
+        photo: currentPhotoDataUrl
+      });
+
+      postForm.reset();
+      clearPhotoBtn.click();
+      renderListings();
+      showStatus("Listing published!");
+    });
+
+    function escapeHtml(str) {
+      return String(str)
+        .replaceAll("&", "&amp;")
+        .replaceAll("<", "&lt;")
+        .replaceAll(">", "&gt;")
+        .replaceAll('"', "&quot;");
+    }
+
+    renderAuthState();
+  </script>
+</body>
+</html>
 <!DOCTYPE html>
 <html lang="en">
 <head>
