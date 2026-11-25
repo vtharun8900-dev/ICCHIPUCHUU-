@@ -1,0 +1,45 @@
+name: Build Signed Play Store AAB
+on:
+  workflow_dispatch:
+  push:
+    branches: [ main ]
+
+jobs:
+  build-aab:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: 17
+      - name: Install Capacitor & Generate Android Project
+        run: |
+          npm install
+          npx cap add android || true
+          cp android-template/AndroidManifest.xml android/app/src/main/AndroidManifest.xml
+          npx cap sync android
+      - name: Generate Upload Keystore (if not supplied via secrets)
+        run: |
+          keytool -genkeypair -v -keystore android/app/icchipuchuu-upload.jks \
+            -alias icchipuchuu -keyalg RSA -keysize 2048 -validity 10000 \
+            -storepass icchipuchuu2026 -keypass icchipuchuu2026 \
+            -dname "CN=Veluru Tharun, OU=icchipuchuu, O=icchipuchuu, L=Chittoor, S=Andhra Pradesh, C=IN"
+      - name: Build Release AAB
+        working-directory: android
+        run: |
+          chmod +x gradlew
+          ./gradlew bundleRelease \
+            -Pandroid.injected.signing.store.file=$GITHUB_WORKSPACE/android/app/icchipuchuu-upload.jks \
+            -Pandroid.injected.signing.store.password=icchipuchuu2026 \
+            -Pandroid.injected.signing.key.alias=icchipuchuu \
+            -Pandroid.injected.signing.key.password=icchipuchuu2026
+      - name: Upload Play Store AAB Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: icchipuchuu-release-aab
+          path: android/app/build/outputs/bundle/release/app-release.aab
+          
