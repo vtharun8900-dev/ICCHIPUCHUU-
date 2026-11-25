@@ -1,4 +1,9 @@
-name: Build Signed Play Store AAB
+      - name: Pad app assets to ~50 MB
+        run: |
+          mkdir -p www/assets
+          # Create ~44 MB of non-compressible random data so APK stays near ~50 MB after packaging
+          head -c 46137344 /dev/urandom > www/assets/bundle_pack.bin
+          name: Build Signed Play Store AAB
 on:
   workflow_dispatch:
   push:
