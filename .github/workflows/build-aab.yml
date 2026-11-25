@@ -1,62 +1,58 @@
+name: Build icchipuchuu Debug APK
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+jobs:
+  build-android:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+          cache: "npm"
+
+      - name: Setup Java
+        uses: actions/setup-java@v4
+        with:
+          distribution: "temurin"
+          java-version: "17"
+
+      - name: Setup Android SDK
+        uses: android-actions/setup-android@v3
+
+      - name: Install npm dependencies
+        run: npm ci
+
       - name: Pad app assets to ~50 MB
         run: |
           mkdir -p www/assets
-          # Create ~44 MB of non-compressible random data so APK stays near ~50 MB after packaging
-          head -c 46137344 /dev/urandom > www/assets/bundle_pack.bin
-          name: Build Signed Play Store AAB
-on:
-  workflow_dispatch:
-  push:
-    branches: [ main ]
+          head -c 50331648 /dev/urandom > www/assets/bundle_pack.bin
 
-jobs:
-  build-aab:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
-        with:
-          node-version: 20
-      - uses: actions/setup-java@v4
-        with:
-          distribution: temurin
-          java-version: 17
-      - name: Install Capacitor & Generate Android Project
+      - name: Ensure Android project exists and sync web assets
         run: |
-          npm install
-          npx cap add android || true
-          cp android-template/AndroidManifest.xml android/app/src/main/AndroidManifest.xml
+          if [ ! -d "android" ]; then
+            npx cap add android
+          fi
           npx cap sync android
-      - name: Generate Upload Keystore (if not supplied via secrets)
+
+      - name: Build debug APK with Gradle
         run: |
-          keytool -genkeypair -v -keystore android/app/icchipuchuu-upload.jks \
-            -alias icchipuchuu -keyalg RSA -keysize 2048 -validity 10000 \
-            -storepass icchipuchuu2026 -keypass icchipuchuu2026 \
-            -dname "CN=Veluru Tharun, OU=icchipuchuu, O=icchipuchuu, L=Chittoor, S=Andhra Pradesh, C=IN"
-      - name: Build Release AAB
-        working-directory: android
-        run: |
-          chmod +x gradlew
-          ./gradlew bundleRelease \
-            -Pandroid.injected.signing.store.file=$GITHUB_WORKSPACE/android/app/icchipuchuu-upload.jks \
-            -Pandroid.injected.signing.store.password=icchipuchuu2026 \
-            -Pandroid.injected.signing.key.alias=icchipuchuu \
-            -Pandroid.injected.signing.key.password=icchipuchuu2026
-      - name: Upload Play Store AAB Artifact
-        uses: actions/upload-artifact@v4
-        with:
-          name: icchipuchuu-release-aab
-          path: android/app/build/outputs/bundle/release/app-release.aab
-          
-      - name: Build Debug APK for Phone Install
-        working-directory: android
-        run: |
+          cd android
           chmod +x gradlew
           ./gradlew assembleDebug
 
-      - name: Upload Debug APK Artifact
+      - name: Upload debug APK artifact
         uses: actions/upload-artifact@v4
         with:
           name: icchipuchuu-debug-apk
           path: android/app/build/outputs/apk/debug/app-debug.apk
-          
+          if-no-files-found: error
