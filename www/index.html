@@ -6,6 +6,813 @@
   <title>icchipuchuu — Community Share & Barter</title>
   <style>
     :root {
+      --primary: #009e60;
+      --primary-dark: #007a49;
+      --primary-soft: #e6f7ef;
+      --bg: #f0f2f5;
+      --surface: #ffffff;
+      --text: #1c1e21;
+      --muted: #65676b;
+      --border: #e4e6eb;
+      --borrow-bg: #e7f3ff;
+      --borrow-text: #1877f2;
+      --swap-bg: #fff4e5;
+      --swap-text: #b45309;
+      --danger: #e41e3f;
+    }
+
+    * {
+      box-sizing: border-box;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    body {
+      margin: 0;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+    }
+
+    .hidden {
+      display: none !important;
+    }
+
+    /* LOGO MARK */
+    .brand-lockup {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .logo-icon {
+      width: 38px;
+      height: 38px;
+      border-radius: 11px;
+      background: #ffffff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 3px 10px rgba(0, 0, 0, 0.14);
+      flex-shrink: 0;
+    }
+
+    .logo-icon.brand-fill {
+      background: var(--primary);
+      box-shadow: none;
+    }
+
+    .logo-icon svg {
+      width: 21px;
+      height: 21px;
+      fill: none;
+      stroke-width: 2.5;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+
+    .logo-icon:not(.brand-fill) svg {
+      stroke: var(--primary);
+    }
+
+    .logo-icon.brand-fill svg {
+      stroke: #ffffff;
+    }
+
+    /* LOGIN SCREEN */
+    .auth-wrapper {
+      min-height: 100vh;
+      max-width: 480px;
+      margin: 0 auto;
+      background: var(--bg);
+      display: flex;
+      flex-direction: column;
+    }
+
+    .auth-banner {
+      background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+      color: #ffffff;
+      padding: 28px 20px 30px;
+      border-bottom-left-radius: 24px;
+      border-bottom-right-radius: 24px;
+    }
+
+    .auth-title {
+      margin: 0;
+      font-size: 27px;
+      font-weight: 800;
+      letter-spacing: -0.4px;
+    }
+
+    .auth-desc {
+      margin: 8px 0 0;
+      font-size: 14px;
+      line-height: 1.45;
+      color: rgba(255, 255, 255, 0.92);
+    }
+
+    .auth-card {
+      background: var(--surface);
+      margin: -16px 14px 24px;
+      padding: 20px 18px;
+      border-radius: 16px;
+      border: 1px solid var(--border);
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.06);
+    }
+
+    .auth-card h2 {
+      margin: 0 0 4px;
+      font-size: 19px;
+      font-weight: 800;
+    }
+
+    .auth-sub {
+      margin: 0 0 16px;
+      font-size: 13px;
+      color: var(--muted);
+    }
+
+    .label {
+      display: block;
+      font-size: 12.5px;
+      font-weight: 700;
+      color: var(--text);
+      margin-bottom: 5px;
+    }
+
+    .input, .select, .textarea {
+      width: 100%;
+      border: 1px solid #ccd0d5;
+      border-radius: 10px;
+      padding: 11px 12px;
+      font-size: 14.5px;
+      color: var(--text);
+      background: #ffffff;
+      margin-bottom: 12px;
+      font-family: inherit;
+    }
+
+    .input:focus, .select:focus, .textarea:focus {
+      outline: none;
+      border-color: var(--primary);
+    }
+
+    .otp-group {
+      display: flex;
+      gap: 8px;
+      margin-bottom: 12px;
+    }
+
+    .otp-group .input {
+      margin-bottom: 0;
+      flex: 1;
+      letter-spacing: 3px;
+      font-weight: 700;
+    }
+
+    .otp-btn {
+      background: var(--primary-soft);
+      color: var(--primary-dark);
+      border: 1px solid #a7f3d0;
+      border-radius: 10px;
+      padding: 0 14px;
+      font-size: 13px;
+      font-weight: 700;
+      cursor: pointer;
+      white-space: nowrap;
+    }
+
+    .otp-banner {
+      background: var(--primary-soft);
+      color: var(--primary-dark);
+      border-radius: 10px;
+      padding: 9px 12px;
+      font-size: 12px;
+      font-weight: 600;
+      margin-bottom: 12px;
+    }
+
+    .primary-btn {
+      width: 100%;
+      background: var(--primary);
+      color: #ffffff;
+      border: none;
+      border-radius: 10px;
+      padding: 12px 16px;
+      font-size: 15px;
+      font-weight: 700;
+      cursor: pointer;
+    }
+
+    .primary-btn:active {
+      background: var(--primary-dark);
+    }
+
+    /* MAIN SOCIAL-STYLE APP SHELL */
+    .phone-frame {
+      max-width: 480px;
+      margin: 0 auto;
+      min-height: 100vh;
+      background: var(--bg);
+      padding-bottom: 76px;
+    }
+
+    .sticky-top {
+      position: sticky;
+      top: 0;
+      z-index: 30;
+      background: var(--primary);
+      color: #ffffff;
+      padding: 12px 14px 14px;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    .top-bar-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .top-app-name {
+      margin: 0;
+      font-size: 22px;
+      font-weight: 800;
+      letter-spacing: -0.3px;
+    }
+
+    .pill-actions {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .glass-pill {
+      background: rgba(255, 255, 255, 0.18);
+      color: #ffffff;
+      border: 1px solid rgba(255, 255, 255, 0.3);
+      border-radius: 999px;
+      padding: 5px 11px;
+      font-size: 12px;
+      font-weight: 700;
+      cursor: pointer;
+    }
+
+    .area-sub-btn {
+      margin-top: 8px;
+      background: rgba(255, 255, 255, 0.16);
+      color: #ffffff;
+      border: none;
+      border-radius: 999px;
+      padding: 4px 10px;
+      font-size: 12px;
+      font-weight: 600;
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      cursor: pointer;
+    }
+
+    .search-wrap {
+      margin-top: 10px;
+    }
+
+    .search-field {
+      width: 100%;
+      border: none;
+      border-radius: 999px;
+      padding: 9px 14px;
+      font-size: 13.5px;
+      background: #ffffff;
+      color: var(--text);
+      outline: none;
+    }
+
+    /* QUICK POST BAR (LIKE FACEBOOK / INSTAGRAM) */
+    .quick-post-card {
+      background: var(--surface);
+      margin: 10px 12px 0;
+      padding: 12px;
+      border-radius: 14px;
+      border: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .me-avatar {
+      width: 38px;
+      height: 38px;
+      border-radius: 50%;
+      background: var(--primary-soft);
+      color: var(--primary-dark);
+      font-weight: 800;
+      font-size: 15px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .quick-trigger {
+      flex: 1;
+      text-align: left;
+      background: var(--bg);
+      border: none;
+      border-radius: 999px;
+      padding: 10px 14px;
+      font-size: 13.5px;
+      color: var(--muted);
+      cursor: pointer;
+    }
+
+    .photo-shortcut {
+      background: var(--primary-soft);
+      color: var(--primary-dark);
+      border: none;
+      border-radius: 10px;
+      padding: 8px 10px;
+      font-size: 12px;
+      font-weight: 700;
+      cursor: pointer;
+    }
+
+    /* CATEGORY CHIPS */
+    .filter-scroll {
+      display: flex;
+      gap: 8px;
+      overflow-x: auto;
+      padding: 10px 12px 6px;
+      scrollbar-width: none;
+    }
+
+    .filter-scroll::-webkit-scrollbar {
+      display: none;
+    }
+
+    .chip {
+      flex: 0 0 auto;
+      background: var(--surface);
+      color: var(--text);
+      border: 1px solid var(--border);
+      border-radius: 999px;
+      padding: 7px 13px;
+      font-size: 12.5px;
+      font-weight: 700;
+      cursor: pointer;
+    }
+
+    .chip.active {
+      background: var(--primary);
+      color: #ffffff;
+      border-color: var(--primary);
+    }
+
+    /* FEED POSTS */
+    .feed-list {
+      padding: 6px 12px 12px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .post-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      overflow: hidden;
+      box-shadow: 0 1px 4px rgba(0, 0, 0, 0.04);
+    }
+
+    .post-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 12px 14px 8px;
+    }
+
+    .author-row {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .author-name {
+      font-size: 14px;
+      font-weight: 700;
+      color: var(--text);
+      line-height: 1.2;
+    }
+
+    .author-meta {
+      font-size: 11.5px;
+      color: var(--muted);
+      margin-top: 2px;
+    }
+
+    .type-pill {
+      font-size: 11px;
+      font-weight: 800;
+      padding: 4px 9px;
+      border-radius: 999px;
+    }
+
+    .pill-borrow {
+      background: var(--borrow-bg);
+      color: var(--borrow-text);
+    }
+
+    .pill-swap {
+      background: var(--swap-bg);
+      color: var(--swap-text);
+    }
+
+    .post-body {
+      padding: 0 14px 10px;
+    }
+
+    .post-title {
+      margin: 0 0 4px;
+      font-size: 16px;
+      font-weight: 800;
+      color: var(--text);
+    }
+
+    .post-text {
+      margin: 0 0 8px;
+      font-size: 13.5px;
+      color: #374151;
+      line-height: 1.42;
+    }
+
+    .want-strip {
+      background: #f8fafc;
+      border-left: 3.5px solid var(--primary);
+      padding: 7px 10px;
+      border-radius: 6px;
+      font-size: 12.5px;
+      color: #1f2937;
+    }
+
+    .post-media {
+      width: 100%;
+      max-height: 290px;
+      object-fit: cover;
+      display: block;
+      background: #f3f4f6;
+    }
+
+    .post-stats {
+      display: flex;
+      justify-content: space-between;
+      padding: 8px 14px;
+      font-size: 12px;
+      color: var(--muted);
+      border-top: 1px solid #f0f2f5;
+    }
+
+    .post-actions {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      border-top: 1px solid var(--border);
+    }
+
+    .action-btn {
+      background: transparent;
+      border: none;
+      padding: 10px 6px;
+      font-size: 12.5px;
+      font-weight: 700;
+      color: var(--muted);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 5px;
+      cursor: pointer;
+    }
+
+    .action-btn.liked {
+      color: var(--danger);
+    }
+
+    .action-btn.swap-active {
+      color: var(--primary-dark);
+      background: var(--primary-soft);
+    }
+
+    /* PROFILE TAB VIEW */
+    .profile-card {
+      background: var(--surface);
+      margin: 12px;
+      padding: 18px;
+      border-radius: 16px;
+      border: 1px solid var(--border);
+    }
+
+    .profile-card h2 {
+      margin: 0 0 6px;
+      font-size: 19px;
+    }
+
+    .profile-line {
+      margin: 4px 0;
+      font-size: 13.5px;
+      color: var(--muted);
+    }
+
+    /* BOTTOM NAVIGATION BAR */
+    .bottom-nav {
+      position: fixed;
+      bottom: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 100%;
+      max-width: 480px;
+      background: var(--surface);
+      border-top: 1px solid var(--border);
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      z-index: 35;
+      padding: 6px 0 calc(6px + env(safe-area-inset-bottom));
+    }
+
+    .nav-item {
+      background: transparent;
+      border: none;
+      padding: 5px 4px;
+      font-size: 11.5px;
+      font-weight: 700;
+      color: var(--muted);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 2px;
+      cursor: pointer;
+    }
+
+    .nav-item.active {
+      color: var(--primary-dark);
+    }
+
+    /* MODAL */
+    .modal-bg {
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.55);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 16px;
+      z-index: 60;
+    }
+
+    .modal-bg.open {
+      display: flex;
+    }
+
+    .modal-box {
+      width: 100%;
+      max-width: 440px;
+      background: var(--surface);
+      border-radius: 16px;
+      padding: 18px;
+      max-height: 88vh;
+      overflow-y: auto;
+    }
+
+    .modal-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 12px;
+    }
+
+    .modal-top h3 {
+      margin: 0;
+      font-size: 17px;
+      font-weight: 800;
+    }
+
+    .x-btn {
+      width: 30px;
+      height: 30px;
+      border-radius: 50%;
+      border: none;
+      background: #f0f2f5;
+      font-weight: 700;
+      cursor: pointer;
+    }
+
+    .upload-zone {
+      border: 1.5px dashed var(--primary);
+      background: #f6fdf9;
+      border-radius: 12px;
+      padding: 12px;
+      margin-bottom: 12px;
+    }
+
+    .preview-pic {
+      width: 100%;
+      max-height: 180px;
+      object-fit: cover;
+      border-radius: 10px;
+      margin-top: 8px;
+      display: none;
+    }
+
+    .toast-msg {
+      position: fixed;
+      bottom: 78px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: #1c1e21;
+      color: #ffffff;
+      padding: 9px 16px;
+      border-radius: 999px;
+      font-size: 12.5px;
+      font-weight: 700;
+      z-index: 90;
+      display: none;
+    }
+  </style>
+</head>
+<body>
+  <template id="brandSvgTpl">
+    <svg viewBox="0 0 24 24">
+      <path d="M7 7h11l-3-3" />
+      <path d="M18 7l-3 3" />
+      <path d="M17 17H6l3 3" />
+      <path d="M6 17l3-3" />
+    </svg>
+  </template>
+
+  <!-- LOGIN + OTP VIEW -->
+  <section id="authView" class="auth-wrapper">
+    <div class="auth-banner">
+      <div class="brand-lockup">
+        <div class="logo-icon" data-brand-logo></div>
+        <h1 class="auth-title">icchipuchuu</h1>
+      </div>
+      <p class="auth-desc">Share items, borrow tools free, and swap with neighbors in your chosen ward or area.</p>
+    </div>
+
+    <div class="auth-card">
+      <h2>Sign In with Mobile OTP</h2>
+      <p class="auth-sub">Enter your name, any ward or area of your choice, and verify OTP.</p>
+
+      <form id="authForm">
+        <label class="label" for="authName">Full Name</label>
+        <input id="authName" type="text" class="input" placeholder="Enter your name" required />
+
+        <label class="label" for="authPhone">Mobile Number</label>
+        <div class="otp-group">
+          <input id="authPhone" type="tel" class="input" placeholder="10-digit mobile number" required />
+          <button id="sendOtpBtn" type="button" class="otp-btn">Send OTP</button>
+        </div>
+
+        <div id="otpBox" class="otp-banner hidden"></div>
+
+        <label class="label" for="authOtp">6-Digit OTP</label>
+        <input id="authOtp" type="text" inputmode="numeric" maxlength="6" class="input" placeholder="••••••" required />
+
+        <label class="label" for="authArea">Your Ward / Area / Locality (Any Choice)</label>
+        <input id="authArea" type="text" class="input" placeholder="e.g. Ward 12, Colony, Village, or Area" required />
+
+        <label class="label" for="authRole">Profile Badge</label>
+        <select id="authRole" class="select">
+          <option value="Neighbor">Neighbor</option>
+          <option value="ID Verified">ID Verified</option>
+          <option value="Student Verified">Student Verified</option>
+          <option value="Gold Neighbor">Gold Neighbor</option>
+        </select>
+
+        <button type="submit" class="primary-btn">Verify & Enter icchipuchuu</button>
+      </form>
+    </div>
+  </section>
+
+  <!-- MAIN APP VIEW -->
+  <div id="appView" class="phone-frame hidden">
+    <header class="sticky-top">
+      <div class="top-bar-row">
+        <div class="brand-lockup">
+          <div class="logo-icon" data-brand-logo></div>
+          <h1 class="top-app-name">icchipuchuu</h1>
+        </div>
+        <div class="pill-actions">
+          <button id="langToggleBtn" type="button" class="glass-pill">తెలుగు</button>
+          <button id="logoutActionBtn" type="button" class="glass-pill">Logout</button>
+        </div>
+      </div>
+
+      <button id="areaPillBtn" type="button" class="area-sub-btn">
+        <span>📍</span>
+        <span id="areaPillLabel">My Area</span>
+        <span>✎</span>
+      </button>
+
+      <div class="search-wrap">
+        <input
+          id="feedSearchInput"
+          type="search"
+          class="search-field"
+          placeholder="Search tools, books, home produce, skills..."
+        />
+      </div>
+    </header>
+
+    <!-- FEED TAB -->
+    <div id="feedTabView">
+      <div class="quick-post-card">
+        <div id="userInitialBadge" class="me-avatar">U</div>
+        <button id="quickPostBtn" type="button" class="quick-trigger">What do you want to share or swap?</button>
+        <button id="quickPhotoBtn" type="button" class="photo-shortcut">📷 Photo</button>
+      </div>
+
+      <div id="categoryBar" class="filter-scroll">
+        <button type="button" class="chip active" data-cat="All">All</button>
+        <button type="button" class="chip" data-cat="Tools">🛠️ Tools</button>
+        <button type="button" class="chip" data-cat="Books">📚 Books</button>
+        <button type="button" class="chip" data-cat="Home Produce">🌿 Home Produce</button>
+        <button type="button" class="chip" data-cat="Skills">💡 Skills</button>
+      </div>
+
+      <main id="postsContainer" class="feed-list"></main>
+    </div>
+
+    <!-- PROFILE / MY SWAPS TAB -->
+    <section id="profileTabView" class="hidden">
+      <div class="profile-card">
+        <div class="brand-lockup" style="margin-bottom:10px;">
+          <div class="logo-icon brand-fill" data-brand-logo></div>
+          <h2 id="profileNameHeading" style="margin:0;">Neighbor Profile</h2>
+        </div>
+        <p id="profileAreaLine" class="profile-line">Area: —</p>
+        <p id="profilePhoneLine" class="profile-line">Phone: —</p>
+        <p id="profileBadgeLine" class="profile-line">Status: —</p>
+        <div style="margin-top:14px; display:flex; gap:8px;">
+          <button id="profilePostBtn" type="button" class="primary-btn" style="padding:10px;">+ Post New Offer</button>
+          <button id="profileLogoutBtn" type="button" class="otp-btn" style="padding:10px 14px;">Switch Account</button>
+        </div>
+      </div>
+    </section>
+
+    <nav class="bottom-nav">
+      <button id="navFeedBtn" type="button" class="nav-item active">
+        <span>🏠</span>
+        <span id="navFeedText">Feed</span>
+      </button>
+      <button id="navPostBtn" type="button" class="nav-item">
+        <span>➕</span>
+        <span id="navPostText">Post</span>
+      </button>
+      <button id="navProfileBtn" type="button" class="nav-item">
+        <span>👤</span>
+        <span id="navProfileText">Profile</span>
+      </button>
+    </nav>
+  </div>
+
+  <!-- CREATE POST MODAL -->
+  <div id="createPostModal" class="modal-bg">
+    <div class="modal-box">
+      <div class="modal-top">
+        <div class="brand-lockup">
+          <div class="logo-icon brand-fill" style="width:30px;height:30px;border-radius:8px;" data-brand-logo></div>
+          <h3 id="modalPostTitle">Create Offer Post</h3>
+        </div>
+        <button id="closeCreateModalBtn" type="button" class="x-btn">✕</button>
+      </div>
+
+      <form id="createPostForm">
+        <label class="label" for="postTitleInput">Item or Skill Title</label>
+        <input id="postTitleInput" type="text" class="input" placeholder="e.g. Study Lamp, Books, Cycle" required />
+
+        <label class="label" for="postTypeSelect">Offer Mode</label>
+        <select id="postTypeSelect" class="select">
+          <option value="FREE BORROW">FREE BORROW</option>
+          <option value="BARTER SWAP">BARTER SWAP</option>
+        </select>
+
+        <label class="label" for="postCategorySelect">Category</label>
+        <select id="postCategorySelect" class="select">
+          <option value="Tools">Tools</option>
+          <option value="Books">Books</option>
+          <option value="Home Produce">Home Produce</option>
+          <option value="Skills">Skills</option>
+        </select>
+
+        <label class="label" for="postDescInput">Description</label>
+        <textarea id="postDescInput" rows="2" class="textarea" placeholder="Share condition, timing, or pickup details..."></textarea>
+
+        <label class="label" for="postWantsInput">Wants in Return</label>
+        <input id="postWantsInput" type="te<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>icchipuchuu — Community Share & Barter</title>
+  <style>
+    :root {
       --green: #009e60;
       --green-dark: #007d4c;
       --green-soft: #e6f7ef;
