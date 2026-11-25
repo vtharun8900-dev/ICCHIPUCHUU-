@@ -3,6 +3,745 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>icchipuchuu</title>
+  <style>
+    :root {
+      --green: #009e60;
+      --green-dark: #007b4a;
+      --green-light: #eaf7f1;
+      --bg: #f5f7f8;
+      --card: #ffffff;
+      --text: #182026;
+      --muted: #5c6873;
+      --border: #dfe5ea;
+    }
+
+    * {
+      box-sizing: border-box;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    body {
+      margin: 0;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+    }
+
+    .hidden {
+      display: none !important;
+    }
+
+    .wrap {
+      max-width: 500px;
+      margin: 0 auto;
+      min-height: 100vh;
+      background: var(--bg);
+      padding-bottom: 32px;
+    }
+
+    /* LOGO */
+    .logo-row {
+      display: inline-flex;
+      align-items: center;
+      gap: 9px;
+    }
+
+    .logo-box {
+      width: 36px;
+      height: 36px;
+      border-radius: 10px;
+      background: #ffffff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .logo-box.on-white {
+      background: var(--green);
+    }
+
+    .logo-box svg {
+      width: 20px;
+      height: 20px;
+      fill: none;
+      stroke-width: 2.4;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+
+    .logo-box:not(.on-white) svg {
+      stroke: var(--green);
+    }
+
+    .logo-box.on-white svg {
+      stroke: #ffffff;
+    }
+
+    /* TOP BAR */
+    .header {
+      background: var(--green);
+      color: #ffffff;
+      padding: 14px 16px;
+      border-bottom-left-radius: 16px;
+      border-bottom-right-radius: 16px;
+    }
+
+    .header-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .app-title {
+      margin: 0;
+      font-size: 24px;
+      font-weight: 800;
+      color: #ffffff;
+    }
+
+    .top-btns {
+      display: flex;
+      gap: 6px;
+    }
+
+    .pill-btn {
+      background: rgba(255, 255, 255, 0.18);
+      color: #ffffff;
+      border: 1px solid rgba(255, 255, 255, 0.35);
+      border-radius: 999px;
+      padding: 5px 11px;
+      font-size: 12px;
+      font-weight: 700;
+      cursor: pointer;
+    }
+
+    .area-btn {
+      margin-top: 8px;
+      background: rgba(255, 255, 255, 0.18);
+      color: #ffffff;
+      border: none;
+      border-radius: 999px;
+      padding: 5px 11px;
+      font-size: 12px;
+      font-weight: 600;
+      cursor: pointer;
+    }
+
+    .search-input {
+      width: 100%;
+      margin-top: 11px;
+      border: none;
+      border-radius: 10px;
+      padding: 10px 12px;
+      font-size: 14px;
+      background: #ffffff;
+      color: var(--text);
+    }
+
+    /* CARDS & FORMS */
+    .card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 16px;
+      margin: 12px;
+    }
+
+    .card h2, .card h3 {
+      margin: 0 0 8px;
+      font-size: 17px;
+    }
+
+    .muted {
+      color: var(--muted);
+      font-size: 13px;
+      margin: 0 0 12px;
+    }
+
+    label {
+      display: block;
+      font-size: 12.5px;
+      font-weight: 700;
+      margin-bottom: 5px;
+    }
+
+    input[type="text"],
+    input[type="tel"],
+    select,
+    textarea {
+      width: 100%;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 10px 12px;
+      font-size: 14px;
+      background: #ffffff;
+      color: var(--text);
+      margin-bottom: 11px;
+      font-family: inherit;
+    }
+
+    .otp-row {
+      display: flex;
+      gap: 8px;
+      margin-bottom: 11px;
+    }
+
+    .otp-row input {
+      margin-bottom: 0;
+      flex: 1;
+    }
+
+    .btn-green {
+      width: 100%;
+      background: var(--green);
+      color: #ffffff;
+      border: none;
+      border-radius: 10px;
+      padding: 11px 14px;
+      font-size: 14px;
+      font-weight: 700;
+      cursor: pointer;
+    }
+
+    .btn-green:active {
+      background: var(--green-dark);
+    }
+
+    .btn-soft {
+      background: var(--green-light);
+      color: var(--green-dark);
+      border: none;
+      border-radius: 10px;
+      padding: 10px 12px;
+      font-size: 13px;
+      font-weight: 700;
+      cursor: pointer;
+      white-space: nowrap;
+    }
+
+    .otp-info {
+      background: var(--green-light);
+      color: var(--green-dark);
+      padding: 8px 10px;
+      border-radius: 8px;
+      font-size: 12px;
+      font-weight: 600;
+      margin-bottom: 11px;
+    }
+
+    /* FILTERS & SECTION */
+    .chips {
+      display: flex;
+      gap: 7px;
+      overflow-x: auto;
+      padding: 10px 12px 4px;
+      scrollbar-width: none;
+    }
+
+    .chips::-webkit-scrollbar {
+      display: none;
+    }
+
+    .chip {
+      flex: 0 0 auto;
+      background: #ffffff;
+      color: var(--text);
+      border: 1px solid var(--border);
+      border-radius: 999px;
+      padding: 6px 13px;
+      font-size: 12.5px;
+      font-weight: 700;
+      cursor: pointer;
+    }
+
+    .chip.active {
+      background: var(--green);
+      color: #ffffff;
+      border-color: var(--green);
+    }
+
+    .row-between {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 8px 12px 4px;
+    }
+
+    .row-between h2 {
+      margin: 0;
+      font-size: 18px;
+    }
+
+    .small-green-btn {
+      background: var(--green);
+      color: #ffffff;
+      border: none;
+      border-radius: 8px;
+      padding: 7px 12px;
+      font-size: 12.5px;
+      font-weight: 700;
+      cursor: pointer;
+    }
+
+    .offer-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 14px;
+      margin: 10px 12px;
+    }
+
+    .offer-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 6px;
+      font-size: 12px;
+    }
+
+    .tag {
+      background: var(--green-light);
+      color: var(--green-dark);
+      font-weight: 800;
+      padding: 3px 8px;
+      border-radius: 6px;
+      font-size: 11px;
+    }
+
+    .offer-title {
+      margin: 0 0 4px;
+      font-size: 16px;
+      font-weight: 800;
+    }
+
+    .offer-img {
+      width: 100%;
+      max-height: 200px;
+      object-fit: cover;
+      border-radius: 10px;
+      margin: 8px 0;
+    }
+
+    .wants {
+      background: #f8fafb;
+      border-left: 3px solid var(--green);
+      padding: 7px 10px;
+      border-radius: 6px;
+      font-size: 12.5px;
+      margin: 8px 0 10px;
+    }
+
+    .offer-foot {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .swap-btn {
+      background: var(--green);
+      color: #ffffff;
+      border: none;
+      border-radius: 8px;
+      padding: 7px 12px;
+      font-size: 12px;
+      font-weight: 700;
+      cursor: pointer;
+    }
+
+    .modal-bg {
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.45);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 14px;
+      z-index: 50;
+    }
+
+    .modal-bg.open {
+      display: flex;
+    }
+
+    .modal-card {
+      width: 100%;
+      max-width: 430px;
+      background: #ffffff;
+      border-radius: 14px;
+      padding: 16px;
+      max-height: 88vh;
+      overflow-y: auto;
+    }
+
+    .preview-img {
+      width: 100%;
+      max-height: 165px;
+      object-fit: cover;
+      border-radius: 10px;
+      margin-top: 6px;
+      display: none;
+    }
+
+    .toast {
+      position: fixed;
+      bottom: 16px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: #182026;
+      color: #ffffff;
+      padding: 8px 14px;
+      border-radius: 999px;
+      font-size: 12px;
+      font-weight: 700;
+      display: none;
+      z-index: 80;
+    }
+  </style>
+</head>
+<body>
+  <template id="logoTpl">
+    <svg viewBox="0 0 24 24">
+      <path d="M7 7h11l-3-3" />
+      <path d="M18 7l-3 3" />
+      <path d="M17 17H6l3 3" />
+      <path d="M6 17l3-3" />
+    </svg>
+  </template>
+
+  <!-- LOGIN + OTP -->
+  <section id="loginSection" class="wrap">
+    <header class="header">
+      <div class="logo-row">
+        <div class="logo-box" data-logo></div>
+        <h1 class="app-title">icchipuchuu</h1>
+      </div>
+    </header>
+
+    <div class="card">
+      <h2>Login & OTP</h2>
+      <p class="muted">Enter your details and any ward or area of your choice.</p>
+
+      <form id="loginForm">
+        <label for="nameInput">Name</label>
+        <input id="nameInput" type="text" placeholder="Enter your name" required />
+
+        <label for="phoneInput">Mobile Number</label>
+        <div class="otp-row">
+          <input id="phoneInput" type="tel" placeholder="10-digit mobile number" required />
+          <button id="sendOtpBtn" type="button" class="btn-soft">Send OTP</button>
+        </div>
+
+        <div id="otpBox" class="otp-info hidden"></div>
+
+        <label for="otpInput">6-Digit OTP</label>
+        <input id="otpInput" type="text" inputmode="numeric" maxlength="6" placeholder="••••••" required />
+
+        <label for="wardInput">Ward / Area (Any Choice)</label>
+        <input id="wardInput" type="text" placeholder="Enter any ward, village, or area" required />
+
+        <button type="submit" class="btn-green">Continue</button>
+      </form>
+    </div>
+  </section>
+
+  <!-- MAIN APP -->
+  <div id="mainSection" class="wrap hidden">
+    <header class="header">
+      <div class="header-top">
+        <div class="logo-row">
+          <div class="logo-box" data-logo></div>
+          <h1 class="app-title">icchipuchuu</h1>
+        </div>
+        <div class="top-btns">
+          <button id="langBtn" type="button" class="pill-btn">తెలుగు</button>
+          <button id="logoutBtn" type="button" class="pill-btn">Logout</button>
+        </div>
+      </div>
+
+      <button id="areaBtn" type="button" class="area-btn">📍 <span id="areaText">My Area</span> ✎</button>
+      <input id="searchBox" type="search" class="search-input" placeholder="Search tools, books, home produce, skills..." />
+    </header>
+
+    <div id="catChips" class="chips">
+      <button type="button" class="chip active" data-cat="All">All</button>
+      <button type="button" class="chip" data-cat="Tools">Tools</button>
+      <button type="button" class="chip" data-cat="Books">Books</button>
+      <button type="button" class="chip" data-cat="Home Produce">Home Produce</button>
+      <button type="button" class="chip" data-cat="Skills">Skills</button>
+    </div>
+
+    <div class="row-between">
+      <h2 id="offersHeading">Nearby Offers</h2>
+      <button id="openAddBtn" type="button" class="small-green-btn">+ Post Offer</button>
+    </div>
+
+    <div id="offersContainer"></div>
+  </div>
+
+  <!-- ADD OFFER MODAL -->
+  <div id="addModal" class="modal-bg">
+    <div class="modal-card">
+      <div class="row-between" style="padding:0 0 10px;">
+        <div class="logo-row">
+          <div class="logo-box on-white" style="width:28px;height:28px;border-radius:8px;" data-logo></div>
+          <h3 style="margin:0;">Post an Offer</h3>
+        </div>
+        <button id="closeAddBtn" type="button" class="btn-soft">✕</button>
+      </div>
+
+      <form id="addForm">
+        <label for="titleInput">Item or Skill</label>
+        <input id="titleInput" type="text" placeholder="e.g. Books, Drill, Cycle" required />
+
+        <label for="typeSelect">Type</label>
+        <select id="typeSelect">
+          <option value="FREE BORROW">FREE BORROW</option>
+          <option value="BARTER SWAP">BARTER SWAP</option>
+        </select>
+
+        <label for="catSelect">Category</label>
+        <select id="catSelect">
+          <option value="Tools">Tools</option>
+          <option value="Books">Books</option>
+          <option value="Home Produce">Home Produce</option>
+          <option value="Skills">Skills</option>
+        </select>
+
+        <label for="descInput">Details</label>
+        <textarea id="descInput" rows="2" placeholder="Condition or availability"></textarea>
+
+        <label for="wantsInput">Wants in Return</label>
+        <input id="wantsInput" type="text" placeholder="What you want in return" />
+
+        <label for="photoFile">Upload Photo</label>
+        <input id="photoFile" type="file" accept="image/*" style="margin-bottom:8px;" />
+        <img id="photoPreview" class="preview-img" alt="Preview" />
+
+        <button type="submit" class="btn-green" style="margin-top:10px;">Publish Offer</button>
+      </form>
+    </div>
+  </div>
+
+  <div id="toast" class="toast"></div>
+
+  <script>
+    const STORAGE_KEY = "icchipuchuu_user_v3";
+    const logoTpl = document.getElementById("logoTpl");
+    document.querySelectorAll("[data-logo]").forEach((el) => el.appendChild(logoTpl.content.cloneNode(true)));
+
+    const loginSection = document.getElementById("loginSection");
+    const mainSection = document.getElementById("mainSection");
+    const loginForm = document.getElementById("loginForm");
+    const sendOtpBtn = document.getElementById("sendOtpBtn");
+    const otpBox = document.getElementById("otpBox");
+    const logoutBtn = document.getElementById("logoutBtn");
+    const langBtn = document.getElementById("langBtn");
+    const areaBtn = document.getElementById("areaBtn");
+    const areaText = document.getElementById("areaText");
+    const searchBox = document.getElementById("searchBox");
+    const catChips = document.getElementById("catChips");
+    const offersHeading = document.getElementById("offersHeading");
+    const offersContainer = document.getElementById("offersContainer");
+    const openAddBtn = document.getElementById("openAddBtn");
+    const addModal = document.getElementById("addModal");
+    const closeAddBtn = document.getElementById("closeAddBtn");
+    const addForm = document.getElementById("addForm");
+    const photoFile = document.getElementById("photoFile");
+    const photoPreview = document.getElementById("photoPreview");
+    const toast = document.getElementById("toast");
+
+    let user = JSON.parse(localStorage.getItem(STORAGE_KEY) || "null");
+    let currentOtp = "";
+    let selectedCat = "All";
+    let telugu = false;
+    let photoData = "";
+
+    let items = [
+      {
+        id: 1,
+        type: "FREE BORROW",
+        cat: "Tools",
+        title: "Electric Drill & Bit Set",
+        desc: "Good working condition for home use up to 2 days.",
+        wants: "Free borrow or home-grown greens",
+        author: "Ramesh K."
+      },
+      {
+        id: 2,
+        type: "BARTER SWAP",
+        cat: "Home Produce",
+        title: "Fresh Morning Milk",
+        desc: "Available for daily or weekend local swap.",
+        wants: "Vegetables, rice, or mobile help",
+        author: "Lakshmi Devi"
+      },
+      {
+        id: 3,
+        type: "BARTER SWAP",
+        cat: "Books",
+        title: "Study & Reference Books",
+        desc: "Clean notes and practice books ready to swap.",
+        wants: "Novels, sports items, or study books",
+        author: "Karthik S."
+      }
+    ];
+
+    function showMsg(msg) {
+      toast.textContent = msg;
+      toast.style.display = "block";
+      clearTimeout(window._t);
+      window._t = setTimeout(() => (toast.style.display = "none"), 2000);
+    }
+
+    function renderScreen() {
+      if (user && user.name) {
+        loginSection.classList.add("hidden");
+        mainSection.classList.remove("hidden");
+        areaText.textContent = user.ward || "My Area";
+        renderList();
+      } else {
+        mainSection.classList.add("hidden");
+        loginSection.classList.remove("hidden");
+      }
+    }
+
+    sendOtpBtn.addEventListener("click", () => {
+      const phone = document.getElementById("phoneInput").value.trim();
+      if (phone.length < 10) {
+        showMsg("Enter 10-digit mobile number");
+        return;
+      }
+      currentOtp = String(Math.floor(100000 + Math.random() * 900000));
+      otpBox.textContent = `Test OTP: ${currentOtp}`;
+      otpBox.classList.remove("hidden");
+      document.getElementById("otpInput").value = currentOtp;
+      showMsg("OTP sent");
+    });
+
+    loginForm.addEventListener("submit", (e) => {
+      e.preventDefault();
+      const otpVal = document.getElementById("otpInput").value.trim();
+      const wardVal = document.getElementById("wardInput").value.trim();
+      if (otpVal.length !== 6) {
+        showMsg("Enter 6-digit OTP");
+        return;
+      }
+      if (currentOtp && otpVal !== currentOtp) {
+        showMsg("Wrong OTP");
+        return;
+      }
+      user = {
+        name: document.getElementById("nameInput").value.trim(),
+        phone: document.getElementById("phoneInput").value.trim(),
+        ward: wardVal || "My Area"
+      };
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(user));
+      renderScreen();
+    });
+
+    logoutBtn.addEventListener("click", () => {
+      localStorage.removeItem(STORAGE_KEY);
+      user = null;
+      currentOtp = "";
+      otpBox.classList.add("hidden");
+      document.getElementById("otpInput").value = "";
+      renderScreen();
+    });
+
+    areaBtn.addEventListener("click", () => {
+      const next = prompt("Enter any ward or area:", areaText.textContent);
+      if (next && next.trim()) {
+        areaText.textContent = next.trim();
+        if (user) {
+          user.ward = next.trim();
+          localStorage.setItem(STORAGE_KEY, JSON.stringify(user));
+        }
+        renderList();
+      }
+    });
+
+    langBtn.addEventListener("click", () => {
+      telugu = !telugu;
+      langBtn.textContent = telugu ? "English" : "తెలుగు";
+      offersHeading.textContent = telugu ? "సమీప ఆఫర్లు" : "Nearby Offers";
+      openAddBtn.textContent = telugu ? "+ ఆఫర్ పోస్ట్" : "+ Post Offer";
+      renderList();
+    });
+
+    catChips.addEventListener("click", (e) => {
+      const btn = e.target.closest(".chip");
+      if (!btn) return;
+      selectedCat = btn.dataset.cat;
+      catChips.querySelectorAll(".chip").forEach((c) => c.classList.remove("active"));
+      btn.classList.add("active");
+      renderList();
+    });
+
+    searchBox.addEventListener("input", renderList);
+    openAddBtn.addEventListener("click", () => addModal.classList.add("open"));
+    closeAddBtn.addEventListener("click", () => addModal.classList.remove("open"));
+
+    photoFile.addEventListener("change", (e) => {
+      const f = e.target.files && e.target.files[0];
+      if (!f) return;
+      const r = new FileReader();
+      r.onload = () => {
+        photoData = r.result;
+        photoPreview.src = photoData;
+        photoPreview.style.display = "block";
+      };
+      r.readAsDataURL(f);
+    });
+
+    addForm.addEventListener("submit", (e) => {
+      e.preventDefault();
+      const title = document.getElementById("titleInput").value.trim();
+      if (!title) return;
+      items.unshift({
+        id: Date.now(),
+        type: document.getElementById("typeSelect").value,
+        cat: document.getElementById("catSelect").value,
+        title,
+        desc: document.getElementById("descInput").value.trim() || "Available for local exchange.",
+        wants: document.getElementById("wantsInput").value.trim() || "Fair local swap",
+        author: user?.name || "User",
+        photo: photoData
+      });
+      addForm.reset();
+      photoData = "";
+      photoPreview.src = "";
+      photoPreview.style.display = "none";
+      addModal.classList.remove("open");
+      renderList();
+      showMsg("Offer posted");
+    });
+
+    function renderList() {
+      const q = searchBox.value.trim().toLowerCase();
+      const ward = user?.ward || "My Area";
+      const list = items.filter((it) => {
+        const catOk = selectedCat === "All" || it.cat === selectedCat;
+        const qOk = !q || it.title.toLowerCase().includes(q) || it.desc.toLowerCase().includes(q);
+        return catOk && qOk;
+      });
+
+      offersContainer.innerHTML = list
+        .map(
+          (it) => `
+          <div class="offer-card">
+            <div class="offer-top">
+              <span class="tag">${esc(it.type)}</span>
+              <span>📍 ${esc(ward)}</span>
+            </div>
+          <!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>icchipuchuu — Community Share & Barter</title>
   <style>
     :root {
