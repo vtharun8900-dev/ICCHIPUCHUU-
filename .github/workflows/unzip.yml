@@ -1,20 +1,59 @@
-name: Unzip Project
+name: Build icchipuchuu Debug APK
+
 on:
   push:
-    paths: [ 'icchipuchuu-aab-builder.zip' ]
-permissions:
-  contents: write
+    branches:
+      - main
+  workflow_dispatch:
+
 jobs:
-  unzip:
+  build-android:
     runs-on: ubuntu-latest
+
     steps:
-      - uses: actions/checkout@v4
-      - run: |
-          unzip -o icchipuchuu-aab-builder.zip
-          rm icchipuchuu-aab-builder.zip
-          git config user.name "github-actions"
-          git config user.email "actions@github.com"
-          git add .
-          git commit -m "Extract icchipuchuu project"
-          git push
-          
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+          cache: "npm"
+
+      - name: Setup Java
+        uses: actions/setup-java@v4
+        with:
+          distribution: "temurin"
+          java-version: "17"
+
+      - name: Setup Android SDK
+        uses: android-actions/setup-android@v3
+
+      - name: Install npm dependencies
+        run: npm ci
+
+      - name: Pad app assets to ~50 MB
+        run: |
+          mkdir -p www/assets
+          head -c 50331648 /dev/urandom > www/assets/bundle_pack.bin
+
+      - name: Ensure Android project exists and sync web assets
+        run: |
+          if [ ! -d "android" ]; then
+            npx cap add android
+          fi
+          npx cap sync android
+
+      - name: Build debug APK with Gradle
+        run: |
+          cd android
+          chmod +x gradlew
+          ./gradlew assembleDebug
+
+      - name: Upload debug APK artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: icchipuchuu-debug-apk
+          path: android/app/build/outputs/apk/debug/app-debug.apk
+          if-no-files-found: error
+     
