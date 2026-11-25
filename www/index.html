@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>icchipuchuu — Local Share, Barter &amp; Cash</title>
+  <style>
+    :root {
+      --bg: #f6f7f9;
+      --card: #ffffff;
+      --text: #14181f;
+      --muted: #5c6573;
+      --accent: #0f766e;
+      --accent-soft: #e6f4f1;
+      --border: #e2e6ec;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.5;
+      padding: 16px;
+    }
+    .app { max-width: 640px; margin: 0 auto; }
+    header {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 18px;
+      margin-bottom: 14px;
+    }
+    .brand { font-size: 1.5rem; font-weight: 800; color: var(--accent); letter-spacing: -0.02em; }
+    .tagline { color: var(--muted); font-size: 0.92rem; margin-top: 4px; }
+    .loc-bar {
+      margin-top: 12px;
+      padding: 10px 12px;
+      background: var(--accent-soft);
+      border-radius: 10px;
+      font-size: 0.85rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+    button {
+      background: var(--accent);
+      color: #fff;
+      border: none;
+      border-radius: 10px;
+      padding: 9px 14px;
+      font-size: 0.88rem;
+      font-weight: 600;
+      cursor: pointer;
+    }
+    button.secondary {
+      background: #eef1f5;
+      color: var(--text);
+    }
+    .tabs {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 8px;
+      margin-bottom: 14px;
+    }
+    .tab-btn {
+      background: var(--card);
+      color: var(--text);
+      border: 1px solid var(--border);
+      padding: 10px;
+      border-radius: 12px;
+      font-weight: 600;
+      font-size: 0.88rem;
+    }
+    .tab-btn.active {
+      background: var(--accent);
+      color: #fff;
+      border-color: var(--accent);
+    }
+    .card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 14px;
+      margin-bottom: 12px;
+    }
+    .badge {
+      display: inline-block;
+      font-size: 0.75rem;
+      font-weight: 700;
+      padding: 3px 8px;
+      border-radius: 999px;
+      background: var(--accent-soft);
+      color: var(--accent);
+      margin-bottom: 6px;
+    }
+    .title { font-size: 1rem; font-weight: 700; }
+    .meta { font-size: 0.84rem; color: var(--muted); margin-top: 4px; }
+    .form-grid { display: grid; gap: 10px; }
+    input, select, textarea {
+      width: 100%;
+      padding: 10px 12px;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      font-size: 0.92rem;
+      font-family: inherit;
+      background: #fff;
+    }
+    footer {
+      text-align: center;
+      font-size: 0.84rem;
+      color: var(--muted);
+      margin-top: 20px;
+      padding-bottom: 16px;
+    }
+    footer a { color: var(--accent); text-decoration: none; font-weight: 600; }
+  </style>
+</head>
+<body>
+  <div class="app">
+    <header>
+      <div class="brand">icchipuchuu</div>
+      <div class="tagline">Neighborhood free share, barter swap &amp; direct cash exchange</div>
+      <div class="loc-bar">
+        <span id="locationStatus">Area: Chittoor &amp; Nearby</span>
+        <button type="button" class="secondary" onclick="detectLocation()">Update Location</button>
+      </div>
+    </header>
+
+    <div class="tabs">
+      <button type="button" class="tab-btn active" id="tab-all" onclick="setFilter('ALL')">All Listings</button>
+      <button type="button" class="tab-btn" id="tab-barter" onclick="setFilter('Barter Swap')">Barter Swap</button>
+      <button type="button" class="tab-btn" id="tab-share" onclick="setFilter('Free Share')">Free Share</button>
+    </div>
+
+    <div class="card">
+      <div class="title" style="margin-bottom: 10px;">Post an Item or Offer</div>
+      <form class="form-grid" onsubmit="addListing(event)">
+        <input id="itemTitle" type="text" placeholder="Item name (e.g., Study table, cycle pump, books)" required />
+        <select id="itemMode">
+          <option value="Free Share">Free Share</option>
+          <option value="Barter Swap">Barter Swap</option>
+          <option value="Direct Cash">Direct Cash</option>
+        </select>
+        <input id="itemNote" type="text" placeholder="Swap preference, cash amount, or pickup note" />
+        <button type="submit">Publish to Neighborhood</button>
+      </form>
+    </div>
+
+    <div id="listingsContainer"></div>
+
+    <footer>
+      <a href="privacy-policy.html">Privacy Policy &amp; Data Deletion</a>
+    </footer>
+  </div>
+
+  <script>
+    const STORAGE_KEY = "icchipuchuu_listings_v1";
+    let currentFilter = "ALL";
+
+    const defaultListings = [
+      {
+        id: 1,
+        title: "Intermediate MPC Reference Books",
+        mode: "Free Share",
+        note: "Available for nearby students to pick up.",
+        area: "Chittoor"
+      },
+      {
+        id: 2,
+        title: "Bluetooth Earbuds",
+        mode: "Barter Swap",
+        note: "Looking to swap for a wired headset or desk lamp.",
+        area: "Chittoor"
+      },
+      {
+        id: 3,
+        title: "Portable Phone Tripod",
+        mode: "Direct Cash",
+        note: "₹250 — lightweight, good condition.",
+        area: "Chittoor"
+      }
+    ];
+
+    function getListings() {
+      try {
+        const saved = JSON.parse(localStorage.getItem(STORAGE_KEY));
+        return Array.isArray(saved) && saved.length ? saved : defaultListings;
+      } catch {
+        return defaultListings;
+      }
+    }
+
+    function saveListings(items) {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(items));
+    }
+
+    function setFilter(mode) {
+      currentFilter = mode;
+      document.querySelectorAll(".tab-btn").forEach((btn) => btn.classList.remove("active"));
+      if (mode === "ALL") document.getElementById("tab-all").classList.add("active");
+      if (mode === "Barter Swap") document.getElementById("tab-barter").classList.add("active");
+      if (mode === "Free Share") document.getElementById("tab-share").classList.add("active");
+      renderListings();
+    }
+
+    function addListing(e) {
+      e.preventDefault();
+      const titleInput = document.getElementById("itemTitle");
+      const modeInput = document.getElementById("itemMode");
+      const noteInput = document.getElementById("itemNote");
+      const locText = document.getElementById("locationStatus").textContent.replace(/^Area:\s*/i, "");
+
+      const items = getListings();
+      items.unshift({
+        id: Date.now(),
+        title: titleInput.value.trim(),
+        mode: modeInput.value,
+        note: noteInput.value.trim() || "Available for local neighborhood exchange.",
+        area: locText || "Chittoor"
+      });
+      saveListings(items);
+      titleInput.value = "";
+      noteInput.value = "";
+      renderListings();
+    }
+
+    function renderListings() {
+      const container = document.getElementById("listingsContainer");
+      const items = getListings().filter((item) => currentFilter === "ALL" || item.mode === currentFilter);
+      container.innerHTML = items.map((item) => `
+        <div class="card">
+          <span class="badge">${item.mode}</span>
+          <div class="title">${item.title}</div>
+          <div class="meta">${item.note}</div>
+          <div class="meta">Location: ${item.area}</div>
+        </div>
+      `).join("");
+    }
+
+    function detectLocation() {
+      const statusEl = document.getElementById("locationStatus");
+      if (!navigator.geolocation) {
+        statusEl.textContent = "Area: Chittoor (Location unavailable)";
+        return;
+      }
+      statusEl.textContent = "Area: Detecting location...";
+      navigator.geolocation.getCurrentPosition(
+        (pos) => {
+          const lat = pos.coords.latitude.toFixed(3);
+          const lon = pos.coords.longitude.toFixed(3);
+          statusEl.textContent = `Area: ${lat}, ${lon}`;
+        },
+        () => {
+          statusEl.textContent = "Area: Chittoor (Permission not granted)";
+        }
+      );
+    }
+
+    renderListings();
+  </script>
+</body>
+</html>
